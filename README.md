@@ -505,7 +505,7 @@ https://github.com/Docas32/precos-carros
 
 <div align="center">
 
-**Desenvolvido com ❤️ usando Claude Code**
+**Desenvolvido por Joao Nogueira Clemente**
 
 `Made with Streamlit • Powered by ML • Deployed to Cloud`
 
