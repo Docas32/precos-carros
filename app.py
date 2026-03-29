@@ -373,55 +373,48 @@ elif page == "📊 Analytics":
         st.error(f"❌ Erro: {model_status}")
     else:
         try:
-            # Gera dados de exemplo para visualizações
-            client = Client()
-            runs = client.list_pipeline_runs(pipeline_name="inference_pipeline")
+            col1, col2 = st.columns(2)
 
-            if runs:
-                last_run = runs[0]
+            with col1:
+                st.subheader("📈 Distribuição de Preços Previstos")
 
-                col1, col2 = st.columns(2)
+                # Simula dados de previsões anteriores
+                np.random.seed(42)
+                precos_simulados = np.random.normal(59237, 20924, 1000)
 
-                with col1:
-                    st.subheader("📈 Distribuição de Preços Previstos")
-
-                    # Simula dados de previsões anteriores
-                    np.random.seed(42)
-                    precos_simulados = np.random.normal(59237, 20924, 1000)
-
-                    fig, ax = plt.subplots(figsize=(8, 5))
-                    ax.hist(precos_simulados, bins=40, color='#1f77b4', alpha=0.7, edgecolor='black')
-                    ax.set_xlabel('Preço Previsto (R$)', fontsize=12)
-                    ax.set_ylabel('Frequência', fontsize=12)
-                    ax.set_title('Distribuição de Preços Previstos', fontsize=14, fontweight='bold')
-                    ax.grid(alpha=0.3)
-                    st.pyplot(fig)
-
-                with col2:
-                    st.subheader("📊 Estatísticas dos Preços")
-
-                    stats_data = {
-                        'Métrica': ['Mínimo', 'Q1', 'Mediana', 'Q3', 'Máximo', 'Média', 'Desvio Padrão'],
-                        'Valor (R$)': [
-                            f"{np.percentile(precos_simulados, 0):,.2f}",
-                            f"{np.percentile(precos_simulados, 25):,.2f}",
-                            f"{np.percentile(precos_simulados, 50):,.2f}",
-                            f"{np.percentile(precos_simulados, 75):,.2f}",
-                            f"{np.percentile(precos_simulados, 100):,.2f}",
-                            f"{np.mean(precos_simulados):,.2f}",
-                            f"{np.std(precos_simulados):,.2f}",
-                        ]
-                    }
-                    st.dataframe(pd.DataFrame(stats_data), use_container_width=True)
-
-                # Gráfico de Box Plot
-                st.subheader("📦 Box Plot - Análise de Outliers")
-                fig, ax = plt.subplots(figsize=(10, 4))
-                ax.boxplot(precos_simulados, vert=False)
+                fig, ax = plt.subplots(figsize=(8, 5))
+                ax.hist(precos_simulados, bins=40, color='#1f77b4', alpha=0.7, edgecolor='black')
                 ax.set_xlabel('Preço Previsto (R$)', fontsize=12)
-                ax.set_title('Box Plot dos Preços Previstos', fontsize=14, fontweight='bold')
-                ax.grid(alpha=0.3, axis='x')
+                ax.set_ylabel('Frequência', fontsize=12)
+                ax.set_title('Distribuição de Preços Previstos', fontsize=14, fontweight='bold')
+                ax.grid(alpha=0.3)
                 st.pyplot(fig)
+
+            with col2:
+                st.subheader("📊 Estatísticas dos Preços")
+
+                stats_data = {
+                    'Métrica': ['Mínimo', 'Q1', 'Mediana', 'Q3', 'Máximo', 'Média', 'Desvio Padrão'],
+                    'Valor (R$)': [
+                        f"{np.percentile(precos_simulados, 0):,.2f}",
+                        f"{np.percentile(precos_simulados, 25):,.2f}",
+                        f"{np.percentile(precos_simulados, 50):,.2f}",
+                        f"{np.percentile(precos_simulados, 75):,.2f}",
+                        f"{np.percentile(precos_simulados, 100):,.2f}",
+                        f"{np.mean(precos_simulados):,.2f}",
+                        f"{np.std(precos_simulados):,.2f}",
+                    ]
+                }
+                st.dataframe(pd.DataFrame(stats_data), use_container_width=True)
+
+            # Gráfico de Box Plot
+            st.subheader("📦 Box Plot - Análise de Outliers")
+            fig, ax = plt.subplots(figsize=(10, 4))
+            ax.boxplot(precos_simulados, vert=False)
+            ax.set_xlabel('Preço Previsto (R$)', fontsize=12)
+            ax.set_title('Box Plot dos Preços Previstos', fontsize=14, fontweight='bold')
+            ax.grid(alpha=0.3, axis='x')
+            st.pyplot(fig)
 
         except Exception as e:
             st.error(f"Erro ao carregar analytics: {str(e)}")

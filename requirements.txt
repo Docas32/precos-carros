@@ -19,6 +19,7 @@ mlflow==3.10.1
 # Web Framework
 streamlit==1.55.0
 pydantic<2.10.0
+sqlalchemy-utils>=0.38.3
 
 # CLI & Formatting
 click==8.2.1
