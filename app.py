@@ -37,8 +37,15 @@ st.markdown("""
 
 @st.cache_resource
 def load_model():
-    """Carrega o modelo treinado do último pipeline run."""
+    """Carrega o modelo treinado (primeiro do joblib, depois do ZenML)."""
     try:
+        import joblib
+        model_path = "savad_model/model.joblib"
+        if os.path.exists(model_path):
+            model = joblib.load(model_path)
+            # Retorna o modelo encapsulado se for uma pipeline, etc. O predict funciona.
+            return model, "Modelo carregado com sucesso do disco"
+            
         client = Client()
         runs = client.list_pipeline_runs(pipeline_name="inference_pipeline")
 
@@ -55,10 +62,10 @@ def load_model():
         train_step = last_run.steps.get("train_model")
 
         if not train_step or not train_step.output:
-            return None, "Modelo não encontrado no último run"
+            return None, "Modelo não encontrado no último run do ZenML"
 
         model = train_step.output.load()
-        return model, "Modelo carregado com sucesso"
+        return model, "Modelo carregado com sucesso do ZenML"
 
     except Exception as e:
         return None, f"Erro ao carregar modelo: {str(e)}"
@@ -153,7 +160,7 @@ if page == "🏠 Home":
         if model:
             st.success("✓ Modelo Carregado")
         else:
-            st.error("✗ Modelo não disponível")
+            st.error(f"✗ Modelo não disponível: {model_status}")
 
     with col2:
         st.info("📊 Pronto para Previsões")
