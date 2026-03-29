@@ -40,7 +40,7 @@ def continuous_deployment_pipeline(
     timeout: int = DEFAULT_SERVICE_START_STOP_TIMEOUT,
 ):
     # O nome do argumento (data_path) deve ser o mesmo que você definiu no @step ingest_df
-    df = ingest_df(data_path="/home/docas32/precos-carros/data/dataset_carros_brasil.csv")
+    df = ingest_df(data_path="data/dataset_carros_brasil.csv")
     X_train, X_test, y_train, y_test = clean_df(df)
 
     model = train_model(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, model_name="LinearRegression")
@@ -54,7 +54,7 @@ def deployment_pipeline(
     min_accuracy: float = 0.92,
 ):
     # 1. Ingestão
-    df = ingest_df(data_path="/home/docas32/precos-carros/data/dataset_carros_brasil.csv")
+    df = ingest_df(data_path="data/dataset_carros_brasil.csv")
 
     # 2. Limpeza e Divisão (Chame apenas uma vez)
     X_train, X_test, y_train, y_test = clean_df(df)
@@ -71,7 +71,7 @@ def deployment_pipeline(
 @pipeline(enable_cache=False, settings={"docker": docker_settings})
 def inference_pipeline():
     # Pipeline de inferência - treina, faz previsões e também avalia o modelo.
-    df = ingest_df(data_path="/home/docas32/precos-carros/data/dataset_carros_brasil.csv")
+    df = ingest_df(data_path="data/dataset_carros_brasil.csv")
     X_train, X_test, y_train, y_test = clean_df(df)
     model = train_model(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, model_name="LinearRegression")
     predictions = predict_model(model=model, X=X_test)

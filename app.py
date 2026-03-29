@@ -11,6 +11,9 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 import os
 from pathlib import Path
+
+# Disable ZenML debugging logs to prevent circular import bug on Streamlit Cloud
+os.environ["ZENML_LOGGING_VERBOSITY"] = "ERROR"
 from zenml.client import Client
 from prediction_preprocessor import PredictionPreprocessor
 
@@ -40,7 +43,13 @@ def load_model():
         runs = client.list_pipeline_runs(pipeline_name="inference_pipeline")
 
         if not runs:
-            return None, "Nenhum pipeline run encontrado"
+            st.warning("⚠️ Primeira execução detectada: Treinando modelo na nuvem (isso pode levar 1-2 minutos)...")
+            from pipelines.deployment_pipeline import inference_pipeline
+            inference_pipeline()
+            runs = client.list_pipeline_runs(pipeline_name="inference_pipeline")
+            
+            if not runs:
+                return None, "Nenhum pipeline run encontrado mesmo após o treinamento automático"
 
         last_run = runs[0]
         train_step = last_run.steps.get("train_model")

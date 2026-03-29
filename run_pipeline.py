@@ -9,7 +9,7 @@ import mlflow
 if __name__ == "__main__":
     print(Client().active_stack.experiment_tracker.get_tracking_uri())  # Verifique o stack ativo antes de executar o pipeline
     # Define paths for data and model
-    data_path = "/home/docas32/precos-carros/data/dataset_carros_brasil.csv"
+    data_path = "data/dataset_carros_brasil.csv"
     model_path = "models/trained_model.pkl"
     # Create a configuration for the model
     modelos = ["LinearRegression"]
