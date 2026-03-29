@@ -1,0 +1,251 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║                    🚀 DEPLOY DO PROJETO NA INTERNET 🚀                    ║
+║                                                                            ║
+║                  Guia Rápido - Preços de Carros Streamlit                  ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+════════════════════════════════════════════════════════════════════════════
+⚡ OPÇÃO MAIS RÁPIDA: STREAMLIT CLOUD (5 minutos)
+════════════════════════════════════════════════════════════════════════════
+
+Pré-requisito: Conta GitHub com SSH configurado
+
+PASSO 1: Setup GitHub
+───────────────────
+$ ./setup_github.sh seu_usuario_github
+
+Exemplo:
+$ ./setup_github.sh joao123
+
+
+PASSO 2: Criar Repositório GitHub
+────────────────────────────────
+1. Acesse: https://github.com/new
+2. Nome: precos-carros
+3. Descrição: Aplicação Streamlit para Previsão de Preços de Carros
+4. Clique: Create repository
+
+
+PASSO 3: Push para GitHub
+────────────────────────
+$ git remote add origin https://github.com/seu_usuario/precos-carros.git
+$ git branch -M main
+$ git push -u origin main
+
+
+PASSO 4: Deploy Streamlit Cloud
+───────────────────────────────
+1. Acesse: https://share.streamlit.io/
+2. Clique: New app
+3. Selecione seu repositório:
+   - Repository: seu_usuario/precos-carros
+   - Branch: main
+   - Main file: app.py
+4. Clique: Deploy
+
+✅ SEU APP ESTÁ ONLINE! 🎉
+
+URL: https://seu-usuario-precos-carros.streamlit.app
+
+════════════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════════════
+OPÇÕES ALTERNATIVAS
+════════════════════════════════════════════════════════════════════════════
+
+🐳 NÃO TEM GITHUB? USE HUGGINGFACE SPACES (10 minutos)
+─────────────────────────────────────────────────────
+
+1. Crie conta: https://huggingface.co/
+2. Vá para: https://huggingface.co/spaces
+3. Clique: Create new Space
+4. Configure:
+   - Space name: precos-carros
+   - Space SDK: Docker
+   - License: MIT
+5. Clone o space e copy-paste os arquivos
+6. Git push
+
+✅ SEU APP ESTARÁ EM:
+https://huggingface.co/spaces/seu_usuario/precos-carros
+
+
+🚂 RAILWAY - DEPLOY COM GIT (5 minutos)
+──────────────────────────────────────
+
+1. Crie conta: https://railway.app/
+2. Conecte com GitHub
+3. Vá para Dashboard > New Project
+4. Selecione: Deploy from GitHub
+5. Selecione seu repositório
+6. Pronto! Deploy automático
+
+✅ SEU APP ESTARÁ EM:
+https://precos-carros-{id}.up.railway.app
+
+
+🐳 DOCKER LOCAL (Testar antes de fazer deploy)
+─────────────────────────────────────────────
+
+Este projeto já inclui Dockerfile!
+
+Build:
+$ docker build -t precos-carros:latest .
+
+Run:
+$ docker run -p 8501:8501 precos-carros:latest
+
+Acesse: http://localhost:8501
+
+
+════════════════════════════════════════════════════════════════════════════
+AUTOMAÇÃO - Scripts Inclusos
+════════════════════════════════════════════════════════════════════════════
+
+📄 setup_github.sh
+   Configura Git e repositório local
+   $ ./setup_github.sh seu_usuario_github
+
+📄 deploy.sh
+   Guia interativo para diferentes plataformas
+   $ ./deploy.sh streamlit        # Streamlit Cloud
+   $ ./deploy.sh railway          # Railway
+   $ ./deploy.sh huggingface      # HuggingFace
+   $ ./deploy.sh docker-local     # Docker local
+
+
+════════════════════════════════════════════════════════════════════════════
+ARQUIVOS DE DEPLOYMENT INCLUSOS
+════════════════════════════════════════════════════════════════════════════
+
+✅ .gitignore          - Arquivos a ignorar no Git
+✅ Dockerfile          - Configuração Docker
+✅ Procfile            - Configuração Railway/Heroku
+✅ requirements.txt    - Dependências Python (já atualizado)
+✅ deploy.sh           - Script de deployment
+✅ setup_github.sh     - Setup do repositório GitHub
+
+
+════════════════════════════════════════════════════════════════════════════
+CHECKLIST PRÉ-DEPLOYMENT
+════════════════════════════════════════════════════════════════════════════
+
+Antes de fazer deploy, verifique:
+
+☐ App funciona localmente: ./run_app.sh
+☐ requirements.txt está atualizado
+☐ .gitignore foi criado
+☐ Não há arquivos sensíveis commitados
+☐ Código está no GitHub
+☐ Todos os dados estão em /data/
+☐ Modelo pode ser carregado
+☐ Não há erros ao executar app.py
+
+
+════════════════════════════════════════════════════════════════════════════
+TROUBLESHOOTING
+════════════════════════════════════════════════════════════════════════════
+
+❌ "Cannot find module"
+   → Adicione ao requirements.txt e faça git push
+
+❌ "ModuleNotFoundError: No module named 'zenml'"
+   → Verifique se requirements.txt inclui zenml
+
+❌ "Port already in use"
+   → Streamlit Cloud usa porta diferente automaticamente
+
+❌ "Connection refused"
+   → Verifique se dados estão em caminho relativo (/data/)
+
+❌ "Git: command not found"
+   → Instale: apt-get install git
+
+
+════════════════════════════════════════════════════════════════════════════
+MONITORAMENTO APÓS DEPLOY
+════════════════════════════════════════════════════════════════════════════
+
+Streamlit Cloud:
+✓ Vá para Settings do app
+✓ Ative "Always rerun on source file change"
+✓ Configure Secrets (se tiver variáveis de ambiente)
+
+Railway:
+✓ Vá para Deployments
+✓ Veja logs em tempo real
+✓ Configure variáveis de ambiente em Variables
+
+HuggingFace Spaces:
+✓ Vá para Space Settings
+✓ Ative "Persistent Storage" se precisar
+✓ Configure secrets em Settings
+
+
+════════════════════════════════════════════════════════════════════════════
+MANUTENÇÃO DEPOIS DE DEPLOY
+════════════════════════════════════════════════════════════════════════════
+
+Fazer atualizações:
+
+1. Edite o código localmente
+2. Teste: ./run_app.sh
+3. Commit: git add . && git commit -m "message"
+4. Push: git push
+
+✅ Seu app atualiza automaticamente!
+
+
+════════════════════════════════════════════════════════════════════════════
+FÓRMULA RÁPIDA (Copie-Cole)
+════════════════════════════════════════════════════════════════════════════
+
+# 1. Setup GitHub
+./setup_github.sh seu_usuario_github
+
+# 2. Criar repo em https://github.com/new
+
+# 3. Push
+git remote add origin https://github.com/seu_usuario/precos-carros.git
+git branch -M main
+git push -u origin main
+
+# 4. Deploy em https://share.streamlit.io/
+
+💡 Pronto! 🎉
+
+
+════════════════════════════════════════════════════════════════════════════
+DOCUMENTAÇÃO DETALHADA
+════════════════════════════════════════════════════════════════════════════
+
+Para mais detalhes, veja:
+→ DEPLOY_GUIA.md
+
+
+════════════════════════════════════════════════════════════════════════════
+SUPORTE E LINKS
+════════════════════════════════════════════════════════════════════════════
+
+Streamlit Cloud:        https://share.streamlit.io/
+HuggingFace Spaces:     https://huggingface.co/spaces
+Railway:                https://railway.app/
+Render:                 https://render.com/
+GitHub:                 https://github.com/
+
+Documentação:
+• Streamlit:    https://docs.streamlit.io/
+• ZenML:        https://docs.zenml.io/
+• MLflow:       https://mlflow.org/docs/
+• Docker:       https://docs.docker.com/
+
+
+════════════════════════════════════════════════════════════════════════════
+
+                        🚀 PRONTO PARA DEPLOY! 🚀
+
+                   Comece com: ./setup_github.sh seu_usuario
+
+════════════════════════════════════════════════════════════════════════════
