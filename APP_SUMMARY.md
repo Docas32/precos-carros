@@ -1,8 +1,6 @@
 # 📋 Resumo da Aplicação Streamlit
 
-## ✅ Criado com Sucesso!
 
-Uma aplicação web interativa completa para previsão de preços de carros foi criada com sucesso usando Streamlit! 🎉
 
 ## 📦 Novos Arquivos Criados
 
